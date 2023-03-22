@@ -1,0 +1,56 @@
+import turtle
+import pandas
+
+screen = turtle.Screen()
+screen.title("U.S. States Game")
+image = "blank_states_img.gif"
+screen.addshape(image)
+turtle.shape(image)
+
+data = pandas.read_csv("50_states.csv")
+all_states = data.state.to_list()
+guessed_states = []
+
+while len(guessed_states) < 50:
+
+    answer_state = screen.textinput(title= f"{len(guessed_states)}/50 States Correct", prompt="What's another state's name?").title()
+
+    if answer_state == "Exit":
+        break
+
+    # Create a turtle for each state and set its position
+    if answer_state in all_states:
+        guessed_states.append(answer_state)
+        t = turtle.Turtle()
+        t.hideturtle()
+        t.penup()
+        state_data = data[data.state == answer_state]
+        t.goto(int(state_data.x), int(state_data.y))
+        t.write(answer_state)
+
+# states to learn.csv
+
+
+# for index, row in data.iterrows():
+#     state_turtle = turtle.Turtle()
+#     state_turtle.penup()
+#     state_turtle.hideturtle()
+#     state_turtle.goto(row["x"], row["y"])
+#     state_turtle.write(row["state"])
+#
+# answer_states = []
+# while len(answer_states) < 50:
+#     answer_state = screen.textinput(title=f"{len(answer_states)}/50 States Correct", prompt="What's another state's name?").title()
+#     if answer_state in states.values and answer_state not in answer_states:
+#         answer_states.append(answer_state)
+#         state_turtle = turtle.Turtle()
+#         state_turtle.penup()
+#         state_turtle.hideturtle()
+#         state_data = data[data["state"] == answer_state]
+#         state_turtle.goto(int(state_data["x"]), int(state_data["y"]))
+#         state_turtle.write(answer_state)
+#
+# turtle.mainloop()
+
+
+screen.exitonclick()
